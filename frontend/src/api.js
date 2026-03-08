@@ -5,26 +5,21 @@ const API = axios.create({
 });
 
 export async function getJobs() {
-  const res = await fetch(API);
-  return res.json();
+  const res = await API.get("/jobs");
+  return res.data;
 }
 
 export async function addJob(job) {
-  await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(job)
-  });
+  const res = await API.post("/jobs", job);
+  return res.data;
 }
 
 export async function updateJob(id, job) {
-  await fetch(`${API}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(job)
-  });
+  const res = await API.put(`/jobs/${id}`, job);
+  return res.data;
 }
 
 export async function deleteJob(id) {
-  await fetch(`${API}/${id}`, { method: "DELETE" });
+  const res = await API.delete(`/jobs/${id}`);
+  return res.data;
 }
