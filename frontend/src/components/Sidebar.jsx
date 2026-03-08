@@ -15,7 +15,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import ViewKanbanIcon from "@mui/icons-material/ViewKanban";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { ColorModeContext } from "../App";
 
@@ -61,11 +61,12 @@ function Sidebar({ setPage }) {
       sx={{
         width: open ? expandedWidth : collapsedWidth,
         flexShrink: 0,
+
         "& .MuiDrawer-paper": {
           width: open ? expandedWidth : collapsedWidth,
           overflowX: "hidden",
-          transition: "width 0.25s ease",
-          backdropFilter: "blur(12px)",
+          transition: "width 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+          backdropFilter: "blur(14px)",
           borderRight: "1px solid rgba(255,255,255,0.08)"
         }
       }}
@@ -75,27 +76,33 @@ function Sidebar({ setPage }) {
 
       <Box sx={{ p: 2 }}>
 
-        {open && (
+        <AnimatePresence>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+          {open && (
 
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 700,
-                textAlign: "center",
-                letterSpacing: 1
-              }}
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.25 }}
             >
-              JobTracker
-            </Typography>
 
-          </motion.div>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 700,
+                  textAlign: "center",
+                  letterSpacing: 1
+                }}
+              >
+                JobTracker
+              </Typography>
 
-        )}
+            </motion.div>
+
+          )}
+
+        </AnimatePresence>
 
       </Box>
 
@@ -113,10 +120,14 @@ function Sidebar({ setPage }) {
 
             <ListItemButton
               onClick={() => handleClick(item.name)}
+              component={motion.div}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               sx={{
                 mb: 1,
                 borderRadius: 2,
                 mx: 1,
+                position: "relative",
 
                 background:
                   active === item.name
@@ -129,10 +140,32 @@ function Sidebar({ setPage }) {
               }}
             >
 
-              <ListItemIcon>
+              {/* Active indicator */}
+
+              {active === item.name && (
+                <motion.div
+                  layoutId="activeIndicator"
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    width: 4,
+                    height: "70%",
+                    background: "#6366f1",
+                    borderRadius: 4
+                  }}
+                />
+              )}
+
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 2 : "auto",
+                  justifyContent: "center"
+                }}
+              >
 
                 <motion.div
-                  whileHover={{ scale: 1.2 }}
+                  whileHover={{ scale: 1.15 }}
                   transition={{ duration: 0.2 }}
                 >
                   {item.icon}
@@ -140,9 +173,25 @@ function Sidebar({ setPage }) {
 
               </ListItemIcon>
 
-              {open && (
-                <ListItemText primary={item.label} />
-              )}
+              <AnimatePresence>
+
+                {open && (
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ width: "100%" }}
+                  >
+
+                    <ListItemText primary={item.label} />
+
+                  </motion.div>
+
+                )}
+
+              </AnimatePresence>
 
             </ListItemButton>
 
@@ -164,20 +213,38 @@ function Sidebar({ setPage }) {
         }}
       >
 
-        {open && (
-          <Typography variant="body2">
-            Theme
-          </Typography>
-        )}
+        <AnimatePresence>
 
-        <IconButton onClick={toggleColorMode}>
+          {open && (
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+
+              <Typography variant="body2">
+                Theme
+              </Typography>
+
+            </motion.div>
+
+          )}
+
+        </AnimatePresence>
+
+        <IconButton
+          component={motion.button}
+          whileHover={{ rotate: 20 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleColorMode}
+        >
           <Brightness4Icon />
         </IconButton>
 
       </Box>
 
     </Drawer>
-
   );
 }
 
