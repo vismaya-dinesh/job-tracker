@@ -1,57 +1,91 @@
-# Job Application Tracker
+# Job Tracker
 
-A full-stack web application to manage and track job applications with a visual pipeline, analytics dashboard, and notes for interview schedules or online assessments.
+A full-stack web application that helps users track job applications, manage interview stages, and keep notes about each opportunity in one place.
+
+## Live Demo
+
+Frontend: https://your-vercel-app.vercel.app
+Backend API: https://job-tracker-17hi.onrender.com
 
 ## Features
 
-- Add, edit, and delete job applications
-- Track applications through different stages
-- Kanban board with drag-and-drop pipeline
-- Dashboard with analytics and charts
-- Add notes for interviews, online tests, and reminders
-- Light and dark theme support
-- Smooth UI animations
-- Responsive design
-
-## Application Pages
-
-### Dashboard
-Provides a quick overview of the job search:
-
-- Application status chart
-- Recent applications
-- Upcoming interviews with notes
-
-### Applications Page
-Displays all job applications in card format with:
-
-- Company name
-- Role
-- Status
-- Job link
-- Notes
-- Edit and delete options
-
-### Kanban Board
-Visual drag-and-drop board to manage applications through stages:
-
-- Wishlist
-- Applied
-- Interview
-- Offer
-- Rejected
+* Add new job applications
+* Update application status (Applied, Interview, Offer, etc.)
+* Save application links and notes
+* Edit or delete job entries
+* View all job applications in a dashboard
 
 ## Tech Stack
 
-### Frontend
-- React
-- Material UI
-- Framer Motion
-- Recharts
+Frontend:
 
-### Backend
-- Flask
-- SQLAlchemy
-- SQLite
+* React (Vite)
+* Axios
+* Material UI
 
+Backend:
 
+* Flask
+* Flask-SQLAlchemy
+* Flask-CORS
+
+Database:
+
+* PostgreSQL (Render)
+
+Deployment:
+
+* Frontend hosted on Vercel
+* Backend hosted on Render
+
+## Project Structure
+
+```
+job-tracker
+│
+├── backend
+│   ├── app.py
+│   └── requirements.txt
+│
+├── frontend
+│   ├── src
+│   ├── package.json
+│   └── vite.config.js
+```
+
+## API Endpoints
+
+GET `/jobs` – Fetch all jobs
+POST `/jobs` – Add a new job
+PUT `/jobs/:id` – Update job details
+DELETE `/jobs/:id` – Delete a job
+
+## Installation (Local Setup)
+
+Clone the repository:
+
+```
+git clone https://github.com/yourusername/job-tracker.git
+```
+
+Backend setup:
+
+```
+cd backend
+pip install -r requirements.txt
+python app.py
+```
+
+Frontend setup:
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+## Future Improvements
+
+* User authentication
+* Interview calendar reminders
+* Application analytics dashboard
