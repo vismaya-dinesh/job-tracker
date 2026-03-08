@@ -1,4 +1,6 @@
-const API = "http://127.0.0.1:5000/jobs";
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL
+});
 
 export async function getJobs() {
   const res = await fetch(API);
