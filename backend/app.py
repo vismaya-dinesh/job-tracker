@@ -25,6 +25,9 @@ class Job(db.Model):
     link = db.Column(db.String(255))
     notes = db.Column(db.Text)
 
+with app.app_context():
+    db.create_all()
+
 
 @app.route("/jobs", methods=["GET"])
 def get_jobs():
